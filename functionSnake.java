@@ -1,69 +1,53 @@
-public class functionSnake {
+public class functionSnake {   
+    public static void moverSnake(short cabezax, short cabezay, short tamano, vectorSF vectorx[], vectorSF vectory[], vectorSF vector[][]){
+        vector[vectorx[tamano-1].getSnake()][vectory[tamano-1].getSnake()].setSnake((short)0);//vuelve el último valor de la cola 0
+        System.out.println(tamano+"-->"+"("+vectorx[tamano-1].getSnake()+", "+vectory[tamano-1].getSnake()+")");
+        //colisionSnake(cabezax,cabezay,tamano,vectorx,vectory,vector);
+        for (int n = tamano-1; n > 0 ; n-- ){
+            vectorx[n].setSnake(vectorx[n-1].getSnake());
+            vectory[n].setSnake(vectory[n-1].getSnake());
+            vector[vectorx[n].getSnake()][vectory[n].getSnake()].setSnake((short)1);//
+            System.out.println(n+"-->"+"("+vectorx[n].getSnake()+", "+vectory[n].getSnake()+")");
+        }
+        colisionSnake(cabezax,cabezay,tamano,vectorx,vectory,vector);
+        vectorx[0].setSnake(cabezax);
+        vectory[0].setSnake(cabezay); 
+        vector[cabezax][cabezay].setSnake((short)1);
+    }
     
-    
-  public void moverSnake(short movx, short movy, short tamano, short cabezax, short cabezay, short y, vectorSF vector[][]){
-      //tamano = (short)(tamano - 1);  
-      vector[cabezax][cabezay].setSnake((short)1);
-      //dada ya una cabeza «movida»
+    public static void inicializarSnake(short tamano, vectorSF vectorx[], vectorSF vectory[], short inicialx, vectorSF vector[][]){
+        System.out.println("\033[32mSucessfull enter: inicializarSnake");
         for (int i = 0 ; i < tamano ; i++){
-            for (int j = 0 ; j < y ; j++){
-                if(vector[j][i].getSnake()==1){
-                    if(i==(cabezax+movx)){
-                        vector[j][i].setSnake((short)0); 
-                    } else {
-                        if (){
-                            
-                        }
-                        
-                
-                    
-                        
-                        
-                
-                        
-                    }
-                }
-            }
+            vectorx[i] = new vectorSF(inicialx);//.setSnake(inicialx);
+            vectory[i] = new vectorSF((short)(i+1));
+            vector[vectorx[i].getSnake()][vectory[i].getSnake()].setSnake((short)1);
+            System.out.println(i+"-->"+"("+vectorx[i].getSnake()+", "+vectory[i].getSnake()+")");
         }
-        //vector[][].setSnake((short)0);
-        
-        
-    }
-    
-    public short[][] cabezaSnake(short x, short y){
-        return null;
-        
-    }
-    
-    public static void inicializarSnake(short tamano, short inicialx, short y, vectorSF vector[][]){
-        //short ENX/*, enY*/; 
-        //ENX = (short)(x/2);
-        //enY = (short)(y/2);
-        //System.out.println("éxitSo");
-        for (int h = 0; h < tamano; h++){
-            //System.out.println(h);
-            for (int i = 0 ; i < y  ; i++ ){
-                //System.out.println(i);
-                //for (int j = 0 ; j < x ; j++){
-                    if (i == inicialx/*vector[j][i]==vector[ENX][1+i]*/){
-                        vector[i][h+1].setSnake((short)1);
-                        //vector[j][i+1] = new vectorSF((short)1);
-                    }
-                //}
-            }
-        }
-        //vector[0][0].setSnake((short) 2); ejecutar un proceso para aleatorizar la posicion
-        //de la fruta
         System.out.println("\033[32mSucessfull process: inicializarSnake");
     }
- /*   public void imprimirSnake(){
-        for (int i = 0 ; i < y  ; i++ ){
-            for (int j = 0 ; j < x; j++){
-                vector[j][i].setSnake((short)1);
+    
+    private static void colisionSnake(short cabezax, short cabezay, short tamano, vectorSF vectorx[], vectorSF vectory[], vectorSF vector[][]){
+        //se sale del marco
+        if (cabezax > vector.length-1 || cabezay > vector[0].length-1 || 
+                cabezax < 0 || cabezay < 0){
+            JuegoSNAKE.menuPrincipal();
+        }
+        //se toca así misma
+        for (int n = 3; n < tamano ; n++ ){
+            if (cabezax == vectorx[n].getSnake() && cabezay == vectory[n].getSnake()){
+                JuegoSNAKE.menuPrincipal();
             }
         }
+        if (cabezax == vectorx[2].getSnake() && cabezay == vectory[2].getSnake()){
+            System.out.println("¡Cuidado con tu próximo movimiento!");
+        }
+        if (vector[cabezax][cabezay].getSnake() > 1){
+            vectorx[tamano] = new vectorSF(vectorx[tamano-1].getSnake());//setSnake(vectorx[tamano-1].getSnake());
+            vectory[tamano] = new vectorSF(vectory[tamano-1].getSnake());//setSnake(vectory[tamano-1].getSnake());
+            JuegoSNAKE.crecerSnake();
+        }
+        
     }
-   // public void extremos(short x, short y, vectorSF[][] extremos){
-    //    extremos[x][y].setSnake((short)1);
-   // }*/
 }
+
+

@@ -8,7 +8,7 @@ public class vectorSF {
     public vectorSF(short snake) {
         this.snake = snake;
     }
-    
+        
     public short getSnake() {
         return snake;
     }
@@ -23,7 +23,12 @@ public class vectorSF {
                 vector[Math.abs(j)][Math.abs(i)] = new vectorSF(relleno);
             }
         }
-        System.out.println("\033[32mSuccesfull process: llenarVector");
+    }
+    
+    public static void inicializarBitacora(vectorSF vector[]){
+        for (int i = 0; i < 5; i++){
+            vector[i] = new vectorSF((short) 0);
+        }
     }
     
     public static void imprimirVector(short x, short y, vectorSF vector[][]){
@@ -31,10 +36,9 @@ public class vectorSF {
             System.out.print("&");
         }
         System.out.println("");
-        
-        for (int i = 0; i < y; i++){
+        for (int i = 0; i < vector[0].length; i++){
             System.out.print("&");
-            for (int j = 0; j < x; j++) {
+            for (int j = 0; j < vector.length; j++) {
                 if (vector[Math.abs(j)][Math.abs(i)].getSnake() == 0){
                     System.out.print(" ");
                 }else{
