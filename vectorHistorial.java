@@ -3,7 +3,8 @@ public class vectorHistorial {
     private short usuarioY;
     private short usuarioSnake;
     private String usuarioName;
-
+    private short usuarioScore;
+    
     public short getUsuarioScore() {
         return usuarioScore;
     }
@@ -11,8 +12,7 @@ public class vectorHistorial {
     public void setUsuarioScore(short usuarioScore) {
         this.usuarioScore = usuarioScore;
     }
-    private short usuarioScore;
-    
+     
     public vectorHistorial(){
         this.usuarioX = 0;
         this.usuarioY = 0;

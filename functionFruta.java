@@ -1,13 +1,10 @@
 public class functionFruta {
     private static float centrox = 0;
     private static float centroy = 0;
-    private static short fruitx = 0;
-    private static short fruity = 0;
+    private static float fruitx = 0;
+    private static float fruity = 0;
     private static vectorSF Bitacorax[] = new vectorSF[5];
     private static vectorSF Bitacoray[] = new vectorSF[5];
-    
-    
-    
     
     public static void aparecerFruta(vectorSF vector[][]){
         short frutax, frutay;
@@ -15,11 +12,11 @@ public class functionFruta {
         frutay = (short)Math.floor(Math.random()*(vector[0].length));
         if(vector[frutax][frutay].getSnake()==0){         
             vector[frutax][frutay].setSnake((short) 2);
+            fruitx = (frutax+1);
+            fruity = (frutay+1);
         }else{
             aparecerFruta(vector);
         }
-        fruitx = frutax;
-        fruity = frutay;
     }
         
     public static void centro(short x, short y){
@@ -37,9 +34,9 @@ public class functionFruta {
         vectorSF.inicializarBitacora(Bitacoray);
     }
 
-    public static short calcularFruta(){
+    public static float calcularFruta(){
         short punteo;
-        punteo = (short)((Math.abs(fruitx-centrox))+(Math.abs(fruity-centroy)));
+        punteo = (short) Math.floor((Math.abs(fruitx-centrox))+(Math.abs(fruity-centroy)));
         return punteo;
     }   
     
@@ -53,8 +50,8 @@ public class functionFruta {
             Bitacoray[n].setSnake(Bitacoray[n-1].getSnake());
         }
         vector[0].setSnake(punteo0);
-        Bitacorax[0].setSnake(fruitx);
-        Bitacoray[0].setSnake(fruity);
+        Bitacorax[0].setSnake((short) fruitx);
+        Bitacoray[0].setSnake((short) fruity);
     }
     
     public static void imprimirBitacora(vectorSF vector[]){
@@ -62,7 +59,7 @@ public class functionFruta {
         while (c!=0){
             if (vector[vector.length-c]!=null){
                 System.out.print("Fruta " + (vector.length-c+1));
-                System.out.println(" || "+"("+Bitacorax[vector.length-c]+", "+Bitacoray[vector.length-c]
+                System.out.println(" || "+"("+Bitacorax[vector.length-c].getSnake()+", "+Bitacoray[vector.length-c].getSnake()
                         +")"+" || "+vector[vector.length-c].getSnake());
                 c--;
             } else {
