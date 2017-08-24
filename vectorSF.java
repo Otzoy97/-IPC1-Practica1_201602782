@@ -39,7 +39,7 @@ public class vectorSF {
         }
         
         for (int k = 0; k < x+2 ;k++ ){
-            System.out.print("#");
+            System.out.print("&");
         }
         System.out.println("");
     }
