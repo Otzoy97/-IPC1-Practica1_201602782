@@ -8,8 +8,6 @@ public class JuegoSNAKE {
     private static short aumentoSnake, punteoFruta, cuentaFruta; 
     private static vectorSF[] SnakeX;
     private static vectorSF[] SnakeY;
-    private static vectorSF[] Punteo;
-    private static vectorSF Bitacora[] = new vectorSF[5];
     private static vectorSF[][] Snake;
     static Scanner pantalla = new Scanner(System.in);
     
@@ -124,114 +122,122 @@ public class JuegoSNAKE {
 
     private static void inicializarPantalla(){
         //Limpia la pantalla
+        
         CLS.executeCLS();
         short largo;
         String d;
         aumentoSnake = 0;        
         largo = (short)(historial[temp].getUsuarioX()*historial[temp].getUsuarioY()*2/3); //importante para entender el try-catch de moverSnake()
-        setSnake( new vectorSF[historial[temp].getUsuarioX()][historial[temp].getUsuarioY()]);
+        
+        setSnake(new vectorSF[historial[temp].getUsuarioX()][historial[temp].getUsuarioY()]);
         setSnakeX(new vectorSF[largo]);//prepara la matriz en dónde alojaran los puntos en x del SNAKE
         setSnakeY(new vectorSF[largo]);//prepara la matriz en dónde alojaran los puntos en y del SNAKE  
         cabeza1X = (short)(historial[temp].getUsuarioX()/2);//prepara el punto inicial de la cabeza del SNAKE (x)
-        cabeza1Y = (short)1;//prepara el punto inicial de la cabeza del SNAKE (y)
-        //System.out.println(largo);<--Útil para depurar el tamaño de la matriz que alojará Snake
+        cabeza1Y = 1;//prepara el punto inicial de la cabeza del SNAKE (x)
+        //System.out.println(largo);<--Útil para depurar
         
-        vectorSF.inicializarVector(historial[temp].getUsuarioX(),historial[temp].getUsuarioY(),Snake,(short)0);//llena de ceros la matriz
-        functionSnake.inicializarSnake(historial[temp].getUsuarioSnake(),SnakeX,SnakeY, cabeza1X, Snake);//marca la matriz con unos en donde se encuentra la serpiente
+        vectorSF.inicializarVector(historial[temp].getUsuarioX(),historial[temp].getUsuarioY(),Snake);//llena de ceros la matriz
+        functionSnake.inicializarSnake(historial[temp].getUsuarioSnake(),SnakeX,SnakeY, cabeza1X, Snake);//marca la matriz con «1» en donde se encuentra la serpiente
         
         functionFruta.aparecerFruta(Snake);//deja la marca en la matriz, lista para imprimir, ingresa los valores para calcular el punteo en la clase funcionFruta
         functionFruta.centro(historial[temp].getUsuarioX(), historial[temp].getUsuarioY());//ingresa los valores para calcular el punteo en la clase funcionFruta
         
-        vectorSF.inicializarBitacora(Bitacora); //lena de ceros la bitacora, evitando errores al desplazar los registros.
-        
         punteoFruta = (short) functionFruta.calcularFruta();//recupera el valor del punteo
-        functionFruta.bitacoraFruta(Bitacora,punteoFruta);//llena la Bitacora en el espacio 0 con el punteo recién creado
+        functionFruta.bitacoraFruta(punteoFruta);//llena la Bitacora en el indice 0 con el punteo recién creado
         
         System.out.println(historial[temp].getUsuarioScore()+" || "+historial[temp].getUsuarioName());// Imprime el punteo actual junto con el nombre del usuario
         vectorSF.imprimirVector(historial[temp].getUsuarioX(),historial[temp].getUsuarioY(),Snake);//imprime la matriz
-        functionFruta.imprimirBitacora(Bitacora);//...imprime la Bitacora ¬_¬
+        functionFruta.imprimirBitacora();//...imprime la Bitacora ¬_¬
         
         d = pantalla.nextLine();
         mover(d);
-
-        cabeza1Y++; //No recuerdo para que sirve esta asignación pero al parecer funciona O.o
-        Pantalla();  
     }
 
     private static void Pantalla(){
         String d;   
         System.out.println(historial[temp].getUsuarioScore()+" || "+historial[temp].getUsuarioName());// Imprime el punteo actual junto con el nombre del usuario
         vectorSF.imprimirVector(historial[temp].getUsuarioX(),historial[temp].getUsuarioY(),Snake);//imprime la matriz ya actualizada
-        functionFruta.imprimirBitacora(Bitacora);//...imprime la Bitacora ¬_¬
+        functionFruta.imprimirBitacora();//...imprime la Bitacora ¬_¬
         d = pantalla.nextLine();
         mover(d);
     }
 
     private static void mover(String d){
-        short /*cabeza0X, cabeza0Y,*/ tamanoSnake;
-        //cabeza0X = cabeza1X;<--Se utilizó durante la depuración de las coordenadas de la cabeza
-        //cabeza0Y = cabeza1Y;<--Se utilizó durante la depuración de las coordenadas de la cabeza
+        short tamanoSnake;//,cabeza0X, cabeza0Y; 
+        //cabeza0X = cabeza1X;//<--Se utilizó durante la depuración de las coordenadas de la cabeza
+        //cabeza0Y = cabeza1Y;//<--Se utilizó durante la depuración de las coordenadas de la cabeza
         tamanoSnake = (short) (historial[temp].getUsuarioSnake()+aumentoSnake);
         switch (d){
             case "W"://arriba
+            case "w":
                 pointX = 0;
                 pointY = -1;
                 break;
-            case "A"://izquierda
+            case "A":
+            case "a"://izquierda
                 pointX = -1;
                 pointY = 0;
                 break;
             case "S"://abajo
+            case "s":
                 pointX = 0;
                 pointY = 1;
                 break;
             case "D"://derecha
+            case "d":
                 pointX = 1;
                 pointY = 0;
                 break;
             case "E":
+            case "e":
                 regresarSnake((short)2);
+                break;
             default:
                 CLS.executeCLS();
                 Pantalla();
+                break;
         }       
         cabeza1X = (short)(cabeza1X + pointX);
         cabeza1Y = (short)(cabeza1Y + pointY);
-        //System.out.println("cabeza_1-->"+"("+cabeza1X +", "+ cabeza1Y +")");<--Se utilizó para depurar 
-        //System.out.println("cabeza_0-->"+"("+cabeza0X +", "+ cabeza0Y +")");<--Se utilizó para depurar
-        CLS.executeCLS();
+        //System.out.println("cabeza_1-->"+"("+cabeza1X +", "+ cabeza1Y +")");//<--Se utilizó para depurar 
+        //System.out.println("cabeza_0-->"+"("+cabeza0X +", "+ cabeza0Y +")");//<--Se utilizó para depurar
+        CLS.executeCLS();//Limpia pantalla
         functionSnake.moverSnake(cabeza1X,cabeza1Y,tamanoSnake,SnakeX,SnakeY,Snake);
-        //Limpia la pantalla
         Pantalla();        
     }
             
     private static void seleccionMenu(String opcion){
         switch(opcion){
             case "S":
+            case "s":            
                 CLS.executeCLS();
                 menuInicio();
                 break;
             case "D":
+            case "d":
                 CLS.executeCLS();
                 menuDatos();
                 break;
             case "H":
+            case "h":
                 CLS.executeCLS();
                 menuHistorial();
                 break;
             case "E":
+            case "e":
                 CLS.executeCLS();
                 System.out.println("¡¡¡¡Gracias por Jugar!!!!");
                 System.exit(0);
                 break;
             case "I":
+            case "i":
                 CLS.executeCLS();
                 menuInstru();
                 break;
             default:
                 CLS.executeCLS();
-                System.out.println("«Debes ingresar cualquiera de las letras que se encuentran");
-                System.out.println("encerradas entre corchetes. (En Mayúscula)»");
+                System.out.println("«Debes ingresar cualquiera de las letras que");
+                System.out.println("se encuentran encerradas entre corchetes»");
                 menuPrincipal();
                 break;
         }        
@@ -245,7 +251,7 @@ public class JuegoSNAKE {
         cuentaFruta = (short)(cuentaFruta + cuentaFruta0);//aumenta el valor del punteo con el valor que se comió
         historial[temp].setUsuarioScore(cuentaFruta);//Guarda el punteo en HISTORIAL
         aumentoSnake++;//aumenta el tamaño de Snake
-        functionFruta.bitacoraFruta(Bitacora,punteoFruta);
+        functionFruta.bitacoraFruta(punteoFruta);
     }
     
     public static void regresarSnake(short opcion){

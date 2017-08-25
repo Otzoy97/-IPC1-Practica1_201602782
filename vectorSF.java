@@ -1,17 +1,11 @@
 public class vectorSF {
-    private short snake;
-
-    public static void inicializarVector(short x, short y, vectorSF vector[][], short relleno){
+    private short snake;   
+    
+    public static void inicializarVector(short x, short y, vectorSF vector[][]){
         for (int i = 0; i < y; i++){
             for (int j = 0; j < x; j++){
-                vector[Math.abs(j)][Math.abs(i)] = new vectorSF(relleno);
+                vector[Math.abs(j)][Math.abs(i)] = new vectorSF((short)0);
             }
-        }
-    }
-    
-    public static void inicializarBitacora(vectorSF vector[]){
-        for (int i = 0; i < 5; i++){
-            vector[i] = new vectorSF((short) 0);
         }
     }
     

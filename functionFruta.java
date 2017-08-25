@@ -5,6 +5,7 @@ public class functionFruta {
     private static float fruity = 0;
     private static vectorSF Bitacorax[] = new vectorSF[5];
     private static vectorSF Bitacoray[] = new vectorSF[5];
+    private static vectorSF vector[] = new vectorSF[5];
     
     public static void aparecerFruta(vectorSF vector[][]){
         short frutax, frutay;
@@ -30,8 +31,16 @@ public class functionFruta {
         }else{
             centroy = (float)Math.floor(x/2);
         }
-        vectorSF.inicializarBitacora(Bitacorax);
-        vectorSF.inicializarBitacora(Bitacoray);
+        inicializarBitacora(Bitacorax);
+        inicializarBitacora(Bitacoray);
+        inicializarBitacora(vector);
+        
+    }
+    
+    private static void inicializarBitacora(vectorSF[] vector){
+        for (int i = 0; i < 5; i++){
+            vector[i] = new vectorSF((short) 0);
+        }
     }
 
     public static float calcularFruta(){
@@ -40,7 +49,7 @@ public class functionFruta {
         return punteo;
     }   
     
-    public static void bitacoraFruta(vectorSF vector[], short punteo0){
+    public static void bitacoraFruta(short punteo0){
         vector[4].setSnake((short)0);
         Bitacorax[4].setSnake((short)0);
         Bitacoray[4].setSnake((short)0);
@@ -54,7 +63,7 @@ public class functionFruta {
         Bitacoray[0].setSnake((short) fruity);
     }
     
-    public static void imprimirBitacora(vectorSF vector[]){
+    public static void imprimirBitacora(){
         int c = vector.length;
         while (c!=0){
             if (vector[vector.length-c]!=null){
